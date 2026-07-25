@@ -34,16 +34,15 @@ python scripts/seed_demo_data.py
 ```
 cd frontend
 npm install
-cp .env.example .env   # fill in VITE_SUPABASE_URL + VITE_SUPABASE_PUBLISHABLE_KEY
+cp .env.example .env   # VITE_API_URL, defaults to http://localhost:8000/api/v1
 npm run dev
 ```
 
-`src/lib/supabaseClient.js` sets up a Supabase client using the browser-safe
-publishable key (separate from the backend's `SUPABASE_KEY`, which should be
-the service role key — never put the service role key in a `VITE_`-prefixed
-var, it ends up in the client bundle). Nothing imports this client yet.
+The frontend talks to the backend only — no direct Supabase access from the
+browser. `src/services/api.js` exports a shared axios instance pointed at
+`VITE_API_URL`; all data fetching should go through it.
 
 The frontend currently runs fully on mocked data (`USE_MOCK` in
-`src/policylens/data.jsx`) and does not yet call the backend API or Supabase
-directly — wiring it up is the next step, pending a decision on how the
-Upload → Review → Final → Policy flow maps to the spec's drift-report flow.
+`src/policylens/data.jsx`) and does not yet call the backend API — wiring it
+up is the next step, pending a decision on how the Upload → Review → Final →
+Policy flow maps to the spec's drift-report flow.

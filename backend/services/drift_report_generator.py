@@ -5,6 +5,7 @@ from collections import Counter
 from uuid import UUID
 
 from backend.db.client import get_supabase
+from backend.services import ai_summary
 
 
 def generate_report(
@@ -17,8 +18,28 @@ def generate_report(
 ) -> dict:
     supabase = get_supabase()
 
-    tier_counts = Counter(rs["tier"] for rs in risk_scores)
+    # Risk tier only means something for confirmed violations — "compliant"/
+    # "uncertain" findings ("Looks Fine" in the UI) never asserted a problem,
+    # so they should not contribute to the risk histogram at all (not even
+    # "low"), rather than inflating it with non-issues.
+    risk_by_ccr_id = {rs["compliance_check_result_id"]: rs for rs in risk_scores}
+    tier_counts = Counter(
+        risk_by_ccr_id[cr["id"]]["tier"]
+        for cr in compliance_results
+        if cr["result"] == "non_compliant" and cr["id"] in risk_by_ccr_id
+    )
     change_counts = Counter(cc["change_type"] for cc in clause_changes)
+
+    by_check_type = {}
+    for check_type in ("policy_compliance", "precedent"):
+        results = Counter(
+            cr["result"] for cr in compliance_results if cr["check_type"] == check_type
+        )
+        by_check_type[check_type] = {
+            "non_compliant": results.get("non_compliant", 0),
+            "uncertain": results.get("uncertain", 0),
+            "compliant": results.get("compliant", 0),
+        }
 
     summary_counts = {
         "total_findings": len(compliance_results),
@@ -28,7 +49,10 @@ def generate_report(
             "removed": change_counts.get("removed", 0),
             "modified": change_counts.get("modified", 0),
         },
+        "by_check_type": by_check_type,
     }
+
+    summary_text = ai_summary.generate_summary(summary_counts, compliance_results, risk_scores)
 
     row = (
         supabase.table("drift_reports")
@@ -38,6 +62,7 @@ def generate_report(
                 "old_version_id": str(old_version_id) if old_version_id else None,
                 "new_version_id": str(new_version_id),
                 "summary_counts": summary_counts,
+                "ai_summary": summary_text,
                 "finding_ids": [cr["id"] for cr in compliance_results],
             }
         )

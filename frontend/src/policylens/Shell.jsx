@@ -37,22 +37,22 @@ function AppShell() {
                 aria-current={page === key ? "page" : undefined}
                 onClick={() => setPage(key)}
               >
-                <Icon size={17} aria-hidden="true" />
+                <Icon size={22} aria-hidden="true" />
                 {label}
               </button>
             ))}
           </div>
           <div className="pl-side-bottom">
-            <button className="pl-sideitem"><Settings   size={17} aria-hidden="true" />Settings</button>
-            <button className="pl-sideitem"><HelpCircle size={17} aria-hidden="true" />Help</button>
+            <button className="pl-sideitem"><Settings   size={22} aria-hidden="true" />Settings</button>
+            <button className="pl-sideitem"><HelpCircle size={22} aria-hidden="true" />Help</button>
           </div>
         </aside>
 
         <main className="pl-main">
           {page === "upload" && <UploadPage />}
+          {page === "policy" && <PolicyPage />}
           {page === "review" && <ReviewPage />}
           {page === "final"  && <FinalPage />}
-          {page === "policy" && <PolicyPage />}
         </main>
       </div>
     </div>
