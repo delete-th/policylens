@@ -119,7 +119,7 @@ export default function FinalPage() {
                 I confirm all applicable findings are resolved
               </label>
               <button className="pl-btn pl-btn-primary" disabled={!confirmed}>
-                Generate Final Document
+                Approve & Finalize
               </button>
             </div>
           </div>

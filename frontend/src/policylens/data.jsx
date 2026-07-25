@@ -4,9 +4,9 @@ export const USE_MOCK = true;
 import { Upload, Search, FileCheck2, ShieldCheck } from "lucide-react";
 export const NAV = [
   { key: "upload", label: "Upload", Icon: Upload },
+  { key: "policy", label: "Policy", Icon: ShieldCheck },
   { key: "review", label: "Review", Icon: Search },
   { key: "final",  label: "Final",  Icon: FileCheck2 },
-  { key: "policy", label: "Policy", Icon: ShieldCheck },
 ];
 
 /* ── Status vocabulary ── */
