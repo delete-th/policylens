@@ -32,10 +32,11 @@ export const CSS = `
 .pl-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-weight: 600; font-size: 12.5px; }
 .pl-avatarwrap { display: flex; align-items: center; gap: 4px; }
 .pl-body { flex: 1; display: flex; min-height: 0; }
-.pl-sidebar { width: 60px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; padding: 14px 0; }
-.pl-side-top { display: flex; flex-direction: column; gap: 4px; }
-.pl-side-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 4px; }
-.pl-sideitem { width: 42px; height: 42px; border-radius: 9px; border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--ink-3); font-size: 9px; font-weight: 500; }
+.pl-sidebar { width: 76px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; padding: 18px 0; }
+.pl-side-top { display: flex; flex-direction: column; gap: 8px; }
+.pl-side-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.pl-sideitem { width: 58px; height: 58px; border-radius: 12px; border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: var(--ink-3); font-size: 10.5px; font-weight: 600; }
+.pl-sideitem svg { width: 26px; height: 26px; }
 .pl-sideitem:hover { background: var(--line-2); color: var(--ink-2); }
 .pl-sideitem[aria-current="page"] { background: #EEF1FA; color: var(--navy); }
 .pl-main { flex: 1; overflow-y: auto; }

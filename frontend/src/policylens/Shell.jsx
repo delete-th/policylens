@@ -1,18 +1,24 @@
 import React from "react";
-import { Feather, Settings, HelpCircle, ChevronDown } from "lucide-react";
+import { Feather, Settings, HelpCircle, ChevronDown, Upload, ShieldCheck, Search, FileCheck2 } from "lucide-react";
 import { CSS } from "./styles.js";
-import { NAV } from "./data.jsx";
 import { StoreProvider, useStore } from "./store.jsx";
 import UploadPage from "./UploadPage.jsx";
 import ReviewPage from "./ReviewPage.jsx";
 import FinalPage  from "./FinalPage.jsx";
 import PolicyPage from "./PolicyPage.jsx";
 
+// Nav order changed to: Upload, Policy, Review, Final
+const NAV = [
+  { key: "upload", label: "Upload", Icon: Upload },
+  { key: "policy", label: "Policy", Icon: ShieldCheck },
+  { key: "review", label: "Review", Icon: Search },
+  { key: "final",  label: "Final",  Icon: FileCheck2 },
+];
+
 function AppShell() {
   const { page, setPage } = useStore();
   return (
     <div className="pl-shell">
-      {/* Top bar — brand + avatar only, sidebar handles navigation */}
       <div className="pl-topbar">
         <div className="pl-brand">
           <div className="pl-brand-badge">
@@ -27,7 +33,6 @@ function AppShell() {
       </div>
 
       <div className="pl-body">
-        {/* Icon sidebar — sole navigation */}
         <aside className="pl-sidebar">
           <div className="pl-side-top">
             {NAV.map(({ key, label, Icon }) => (
@@ -37,22 +42,22 @@ function AppShell() {
                 aria-current={page === key ? "page" : undefined}
                 onClick={() => setPage(key)}
               >
-                <Icon size={17} aria-hidden="true" />
+                <Icon size={22} aria-hidden="true" />
                 {label}
               </button>
             ))}
           </div>
           <div className="pl-side-bottom">
-            <button className="pl-sideitem"><Settings   size={17} aria-hidden="true" />Settings</button>
-            <button className="pl-sideitem"><HelpCircle size={17} aria-hidden="true" />Help</button>
+            <button className="pl-sideitem"><Settings   size={22} aria-hidden="true" />Settings</button>
+            <button className="pl-sideitem"><HelpCircle size={22} aria-hidden="true" />Help</button>
           </div>
         </aside>
 
         <main className="pl-main">
           {page === "upload" && <UploadPage />}
+          {page === "policy" && <PolicyPage />}
           {page === "review" && <ReviewPage />}
           {page === "final"  && <FinalPage />}
-          {page === "policy" && <PolicyPage />}
         </main>
       </div>
     </div>
