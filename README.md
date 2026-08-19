@@ -128,7 +128,7 @@ scripts/             Demo data seeding
 
 ## Status
 
-This started as a hackathon build (HackXperience). The backend pipeline (ingestion, versioning, diffing, RAG-based evaluation, risk scoring, reporting) is implemented end-to-end. The frontend currently runs on mocked data (`USE_MOCK` in `src/policylens/data.jsx`) while the Upload → Review → Final → Policy flow is finalized against the drift-report shape the API returns — wiring it up to the live backend is the next step.
+This started as a hackathon build (HackXperience). Both sides are fully wired end-to-end and functional: uploading a policy or contract through the UI hits the live FastAPI backend, which parses the file, generates embeddings, persists clauses/versions/contracts to Supabase, stores the source PDF, and runs the drift pipeline synchronously — the Upload → Review → Final → Policy pages all read and write real data through the API, with no mock layer.
 
 ## License
 
